@@ -4,7 +4,7 @@ use parameters
 use constants
 use derivatives
 use analysis
-
+use IO
 
 implicit none
 
@@ -54,8 +54,8 @@ real(kind=dp),dimension(4) :: n,n_BL, n_tetrad
 !different pitch angles
 real(kind=dp) :: pitch_coordinate, pitch_tetrad, pitch_coordinate2,mag
 
-!Characters
-
+!Logicals
+logical :: condition
 
 
 
@@ -85,32 +85,27 @@ AllData(i,13) = tau !tau
 call derivs(y,dy)
 AllDerivs(i,1:4) = dy(1:4)
 
-
-!print *, h/convert_s
-!stop
-
-
 !Integrate
-do while ( y(1) .LT. time_cutoff )
 
-!do while (i .LT. 5000)
+if (duration .EQ. 'long') then
+    condition = y(1) .LT. time_cutoff
+elseif (duration .EQ. 'short') then
+    condition = tau .LT. N_spins
+else
+    print *, 'Integration condition not specified'
+    stop
+endif
 
-!do while (tau .LT. 3.0_dp * p0 *convert_s ) !short term high precision over a few spin periods
 
 
+!do while condition
 
-!print *, tau, 10.0_dp * p0 *convert_s, h
+do while (condition)
 
     !Update
     call RKF(y,y1)
     y = y1
  
-    !Print statements
-!    if (print_status .EQ. 1) then
- !       print *, y(1)/ time_cutoff, h, y(2), i
- !   endif
-
-   
     !Save the output
     i = i + 1
  
@@ -128,6 +123,20 @@ do while ( y(1) .LT. time_cutoff )
 
     call derivs(y,dy)
     AllDerivs(i,1:4) = dy(1:4)
+
+
+
+!Update condition
+if (duration .EQ. 'long') then
+    condition = y(1) .LT. time_cutoff
+elseif (duration .EQ. 'short') then
+    condition = tau .LT. N_spins
+else
+    print *, 'Integration condition not specified'
+    stop
+endif
+
+
 
 
 enddo
@@ -160,8 +169,6 @@ outputDerivs = AllDerivs(1:i, :)
 open(unit=30,file=savefile1,status='replace',form='formatted')
 do j=1,NSteps
 
-
-    
     !Read in the 4-poisiton and 4-velocity
     vector_position(1:4) = output(j,1:4)
     vector_velocity(1:4) = outputDerivs(j,1:4)
@@ -226,6 +233,20 @@ write(30,*) output(j,1)/convert_s,xi(1),xi(2),xi(3), &
             vector_position
 enddo
 close(30)
+
+
+print *, output(Nsteps,:)
+
+call IO_array(output,Nsteps,ncols)
+
+!open(unit=40,file=savefile2,status='replace',form='formatted')
+
+!do j=1,NSteps
+
+!enddo
+
+!close(40)
+
 
 
 

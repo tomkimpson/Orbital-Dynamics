@@ -38,6 +38,7 @@ print *, 'periapsis = ', rp
 
 
 savefile1 = trim(adjustl(IO_path))//'trajectory.txt'
+savefile2 = trim(adjustl(IO_path))//'spin.txt'
 
 if (dp .EQ. 8) then
 escal = 1.0e15
@@ -53,8 +54,17 @@ h = 1.0d-8
 h = 10.0_dp
 h=10.0_dp
 
+
+
+if (duration .EQ. 'short' .and. adaptive .EQ. 1) then
+
+print *, 'STOP: You have chosen a short duration with adaptive stepsize. Perhaps you want a fixed stepsize?'
+stop
+endif
+
 print *, 'Outfiles:'
 print *, savefile1
+print *, savefile2
 
 
 end subroutine setup
@@ -126,7 +136,6 @@ uphi = (a*PP/delta -a*E + L/sin(theta)**2)/sigma
 
 
 
-print *, 'E,L,Q=', E, L,Q
 
 
 

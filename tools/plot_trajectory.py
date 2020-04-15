@@ -81,7 +81,7 @@ plt.subplots_adjust(hspace=0.01)
 
 
 savefile = '/Users/tomkimpson/Data/ThesisData/orbitaldynamics2d.png'
-plt.savefig(savefile,dpi=100,bbox='tight')
-plt.show()
+#plt.savefig(savefile,dpi=100,bbox='tight')
+#plt.show()
 
 plt.show()
