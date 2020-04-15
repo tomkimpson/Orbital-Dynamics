@@ -22,7 +22,6 @@ subroutine setup()
 character(len=10) :: LamStr
 character(len=10) :: QStr, EStr, Astr
 
-
 print *, 'System Info----- '
 
 
@@ -32,6 +31,10 @@ print *, 'semi-latus=', semi_latus
 print *, 'Eccentricity = ', eccentricity
 print *, 'Estimated Orbital Period = ', PeriodEst/(convert_s*3600.0_dp * 24.0_dp*365.0_dp), ' years'
 print *, 'theta_min = ', 90.0_dp-iota
+print *, 'periapsis = ', rp
+
+
+
 
 
 savefile1 = trim(adjustl(IO_path))//'trajectory.txt'
@@ -47,6 +50,8 @@ endif
 !Initial stepsize
 h = 1.0_dp
 h = 1.0d-8
+h = 10.0_dp
+h=10.0_dp
 
 print *, 'Outfiles:'
 print *, savefile1
@@ -116,7 +121,7 @@ PP = E* (r**2.0_dp + a**2) - a*L
 
 ut = ((r**2+a**2)*PP/delta -a*(a*E-L))/sigma
 ur2 = (PP**2.0_dp - delta*(r**2.0_dp + (L - a*E)**2.0_dp) )/sigma**2.0_dp
-utheta2 = (Q - cos(theta)**2.0_dp*(a**2.0_dp * (1.0_dp - E**2.0_dp)+L**2.0_dp/sin(theta)**2.0_dp) ) / sigma**2
+utheta2 = (Q - cos(theta)**2.0_dp*(a**2 * (1.0_dp - E**2.0_dp)+L**2.0_dp/sin(theta)**2.0_dp) ) / sigma**2
 uphi = (a*PP/delta -a*E + L/sin(theta)**2)/sigma
 
 

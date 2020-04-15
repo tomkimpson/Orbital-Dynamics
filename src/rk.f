@@ -91,16 +91,15 @@ AllDerivs(i,1:4) = dy(1:4)
 
 
 !Integrate
-!do while ( y(1) .LT. time_cutoff )
+do while ( y(1) .LT. time_cutoff )
 
 !do while (i .LT. 5000)
 
-do while (tau .LT. 3.0_dp * p0 *convert_s ) !short term high precision over a few spin periods
+!do while (tau .LT. 3.0_dp * p0 *convert_s ) !short term high precision over a few spin periods
 
 
 
 !print *, tau, 10.0_dp * p0 *convert_s, h
-
 
     !Update
     call RKF(y,y1)
@@ -223,7 +222,8 @@ write(30,*) output(j,1)/convert_s,xi(1),xi(2),xi(3), &
             xi(1) / convert_m, xi(2)/convert_m, xi(3)/convert_m, &
             xi_B(1), xi_B(2), xi_B(3), &
             xi_B(1)/convert_m, xi_B(2)/convert_m, xi_B(3)/convert_m, &
-            pitch_coordinate, pitch_tetrad
+            pitch_coordinate, pitch_tetrad, &
+            vector_position
 enddo
 close(30)
 

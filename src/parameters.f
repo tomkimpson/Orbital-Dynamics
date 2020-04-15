@@ -11,20 +11,20 @@ real(kind=dp), parameter :: PI = 4.D0*ATAN(1.D0)
 
 !Orbital parameters
 
-real(kind=dp), parameter :: semi_major = 800.0_dp 
-real(kind=dp), parameter :: eccentricity = 0.80_dp !Orbital eccentricity
+real(kind=dp), parameter :: semi_major = 825.0_dp 
+real(kind=dp), parameter :: eccentricity = 0.90_dp !Orbital eccentricity
 real(kind=dp), parameter :: iota = 0.0_dp !Inclination w.r.t equatorial plane in degrees
-real(kind=dp), parameter :: N_orbit = 30.50_dp !Number of orbits to integrate
+real(kind=dp), parameter :: N_orbit = 60.50_dp !Number of orbits to integrate
 
 
 !BH intrinsic parameters
-real(kind=dp), parameter :: MBH = 4.0d6!BH mass in solar masses
-real(kind=dp), parameter :: a= +0.90_dp !BH spin parameter Now set later
+real(kind=dp), parameter :: MBH = 4.31d6!BH mass in solar masses
+real(kind=dp), parameter :: a= 0.60_dp !BH spin parameter Now set later
 
 !PSR intrinsic parameters
 real(kind=dp), parameter :: MPSR = 1.40_dp !pulsar mass in solar masses
 real(kind=dp), parameter :: RPSR = 10.0_dp !pulsar radius in km
-real(kind=dp), parameter :: stheta = 0.0_dp, sphi = 0.0_dp
+real(kind=dp), parameter :: stheta = PI/4.0_dp, sphi = 0.0_dp
 real(kind=dp), parameter :: psi = PI/4.0_dp !Polar angle of radiation beam w.r.t spin axis
 real(kind=dp), parameter :: p0 = 1.0e-3 !spin period
 
@@ -37,7 +37,7 @@ real(kind=dp), parameter :: eta = 3.0_dp*PI/12.0_dp !Oreintation of initial mome
 
 
 !Integration settings
-integer(kind=dp), parameter :: adaptive = 0 !turn on/off adaptive stepsize
+integer(kind=dp), parameter :: adaptive = 1 !turn on/off adaptive stepsize
 
 !IO location
 character(len=200) :: IO_path = '/Users/tomkimpson/Data/ThesisData/MPD/'
