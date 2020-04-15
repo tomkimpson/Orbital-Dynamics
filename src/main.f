@@ -8,19 +8,7 @@ use IC
 implicit none
 
 
-print *, 'here'
-
-
-
 call run()
-
-
-
-
-print *, 'Finished'
-
-
-
 
 
 
@@ -47,8 +35,6 @@ call setup()
 
 !Calculate the initial E,L,Q from the Keplerian orbital parameters
 r_init = semi_major
-!r_init = rp
-
 if (eccentricity .EQ. 0.0_dp) then
 
 call calculate_EQL_circular(E,Q,L)
@@ -87,14 +73,9 @@ Y_init(4) = phi_init
 Y_init(5:8) = PVector
 Y_init(9:12) = SVector
 
-if (print_status .EQ. 1) then
-print *, Y_init(1:4)
-print *, Pvector
-print *, Svector
-print *, a
-print *, lambda
-endif
 
+
+print *, 'Momentum vector', PVector
 
 
 print *, 'start RK'

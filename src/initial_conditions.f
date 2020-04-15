@@ -46,9 +46,7 @@ endif
 
 !Initial stepsize
 h = 1.0_dp
-h = 1.0d-6
-
-
+h = 1.0d-8
 
 print *, 'Outfiles:'
 print *, savefile1
@@ -126,6 +124,7 @@ uphi = (a*PP/delta -a*E + L/sin(theta)**2)/sigma
 print *, 'E,L,Q=', E, L,Q
 
 
+
 call checks(ur2,utheta2)
 
 
@@ -147,8 +146,8 @@ PVector(4) = m0*uphi
 !Do we need to account for the oreintation of the initial momentum here?
 !PI/2 = plane
 !Generall momenhtum perp to angular momentum
-PVector(2) = PVector(2) * cos(eta)
-PVector(4) = PVector(4) * sin(eta)
+!PVector(2) = PVector(2) * cos(eta)
+!PVector(4) = PVector(4) * sin(eta)
 
 
 
@@ -159,10 +158,8 @@ P3vector(3) = PVector(4)
 call transform_BL_to_XY(P3vector, P3vectorXY,r,theta,phi)
 
 
-print *, 'P Cartesian:', P3vectorXY
 
 call calculate_covariant_metric(r,theta,metric)
-
 
 
 
