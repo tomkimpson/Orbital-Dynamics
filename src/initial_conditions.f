@@ -62,6 +62,12 @@ print *, 'STOP: You have chosen a short duration with adaptive stepsize. Perhaps
 stop
 endif
 
+if (duration .EQ. 'short') then
+h = 1.0d-6
+endif
+
+
+
 print *, 'Outfiles:'
 print *, savefile1
 print *, savefile2

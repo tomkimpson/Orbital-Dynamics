@@ -90,7 +90,7 @@ AllDerivs(i,1:4) = dy(1:4)
 if (duration .EQ. 'long') then
     condition = y(1) .LT. time_cutoff
 elseif (duration .EQ. 'short') then
-    condition = tau .LT. N_spins
+    condition = tau .LT. N_spins*p0*convert_s
 else
     print *, 'Integration condition not specified'
     stop
@@ -116,9 +116,11 @@ do while (condition)
     endif
 
 
+
     AllData(i,1:12) = y
     tau = tau + h
     AllData(i,13) = tau
+
 
 
     call derivs(y,dy)
@@ -130,7 +132,7 @@ do while (condition)
 if (duration .EQ. 'long') then
     condition = y(1) .LT. time_cutoff
 elseif (duration .EQ. 'short') then
-    condition = tau .LT. N_spins
+    condition = tau .LT. N_spins*p0*convert_s
 else
     print *, 'Integration condition not specified'
     stop
@@ -235,23 +237,11 @@ enddo
 close(30)
 
 
-print *, output(Nsteps,:)
+print *, 'call IO array'
 
 call IO_array(output,Nsteps,ncols)
 
-!open(unit=40,file=savefile2,status='replace',form='formatted')
 
-!do j=1,NSteps
-
-!enddo
-
-!close(40)
-
-
-
-
-
-!Save the time delays
 
 
 end subroutine rk
