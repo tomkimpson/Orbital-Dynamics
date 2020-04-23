@@ -239,7 +239,7 @@ close(30)
 
 print *, 'call IO array'
 
-call IO_array(output,Nsteps,ncols)
+call IO_array(output,outputDerivs,Nsteps,ncols)
 
 
 

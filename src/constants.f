@@ -93,7 +93,7 @@ character(len=200) :: PathOut,BinaryData, PlotData,Fname,RoemerData !Decalared l
 real(kind=dp), parameter :: coarse = 1.0_dp !how much of total data is saved to formatted file 1 = lots, +infty = none
 
 character(len=200) :: TimeFile, SpinFile, FileID, RoemerFile, EinsteinFile
-character(len=200) :: dir, savefile1, savefile2,savefile3
+character(len=200) :: dir, savefile1, savefile2,savefile3, savefile_targets
 
 
 

@@ -24,9 +24,10 @@ ax2 = plt.subplot2grid((3,1), (2,0))
 #Load data
 path = '/Users/tomkimpson/Data/ThesisData/MPD/'
 MPDFile= path +'trajectory.txt'
+targets = path + 'targets.txt'
 
 
-def plot(f):
+def plot(f,ID):
     data = np.loadtxt(f)
 
     t = data[:,0]
@@ -34,14 +35,21 @@ def plot(f):
     y = data[:,2]
     z = data[:,3]
 
-    xKM = data[:,4] / 1e3
-    yKM = data[:,5] /1e3
-    zKM = data[:,6] /1e3
 
-    ax1.plot(x,y,c='C0')
-    ax2.plot(x,zKM,c='C0')
+    if ID == 0:
+
+        #Plot usual trajectory
+        xKM = data[:,4] / 1e3
+        yKM = data[:,5] /1e3
+        zKM = data[:,6] /1e3
+
+        ax1.plot(x,y,c='C0')
+        ax2.plot(x,zKM,c='C0')
 
 
+    if ID == 1:
+        #plot the target points
+        ax1.scatter(x,y)
 
 def Format2D(ax):
 
@@ -59,14 +67,19 @@ def Format2D(ax):
     ax.scatter(0,0,c='r')
 
     #axes limits
-    sq = 25
+    sq = 1000
     ax.set_xlim(-sq,sq)
     ax.set_ylim(-sq,sq)
 
 
 
-plot(MPDFile)
+plot(MPDFile,0)
+plot(targets,1)
 Format2D(ax1)
+
+
+
+
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
 fs = 20

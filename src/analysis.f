@@ -280,7 +280,6 @@ p(2) = pr
 p(3) = ptheta
 p(4) = Lz
 
-!print *, 'p=', p
 
 
 end subroutine create_ray

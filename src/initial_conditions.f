@@ -39,6 +39,9 @@ print *, 'periapsis = ', rp
 
 savefile1 = trim(adjustl(IO_path))//'trajectory.txt'
 savefile2 = trim(adjustl(IO_path))//'spin.txt'
+savefile_targets = trim(adjustl(IO_path))//'targets.txt'
+
+
 
 if (dp .EQ. 8) then
 escal = 1.0e15

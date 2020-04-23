@@ -12,14 +12,14 @@ real(kind=dp), parameter :: PI = 4.D0*ATAN(1.D0)
 !Orbital parameters
 
 real(kind=dp), parameter :: semi_major = 200.0_dp 
-real(kind=dp), parameter :: eccentricity = 0.90_dp !Orbital eccentricity
+real(kind=dp), parameter :: eccentricity = 0.10_dp !Orbital eccentricity
 real(kind=dp), parameter :: iota = 0.0_dp !Inclination w.r.t equatorial plane in degrees
-real(kind=dp), parameter :: N_orbit = 5.50_dp !Number of orbits to integrate. Used if duration = 'long' (below)
+real(kind=dp), parameter :: N_orbit = 1.0_dp !Number of orbits to integrate. Used if duration = 'long' (below)
 real(kind=dp), parameter :: N_spins = 2.0_dp !Number of spin periods to integrate. Used if duration = 'short' (below)
 
 
 !BH intrinsic parameters
-real(kind=dp), parameter :: MBH = 2.200d3!BH mass in solar masses
+real(kind=dp), parameter :: MBH = 4.3100d6!BH mass in solar masses
 real(kind=dp), parameter :: a= 0.60_dp !BH spin parameter Now set later
 
 !PSR intrinsic parameters
@@ -38,12 +38,13 @@ real(kind=dp), parameter :: eta = 3.0_dp*PI/12.0_dp !Oreintation of initial mome
 
 
 !Integration settings
-integer(kind=dp), parameter :: adaptive = 0 !turn on/off adaptive stepsize
-character(len=20), parameter :: duration = 'short' !long, short. Long integrates for Norbits * period. !Short integrates for 
+integer(kind=dp), parameter :: adaptive = 1 !turn on/off adaptive stepsize
+character(len=20), parameter :: duration = 'long' !long, short. Long integrates for Norbits * period. !Short integrates for N_spins * p0
 
-!IO location
+
+!IO settings
 character(len=200) :: IO_path = '/Users/tomkimpson/Data/ThesisData/MPD/'
-
+integer(kind=dp) :: N_targets = 20 !Number of target points to extract to use with Ray Tracing
 
 !Debugging
 integer(kind=dp), parameter :: print_status = 1 !Turns on/off 1/0 print commands 

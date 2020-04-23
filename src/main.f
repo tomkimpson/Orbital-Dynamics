@@ -35,6 +35,7 @@ call setup()
 
 !Calculate the initial E,L,Q from the Keplerian orbital parameters
 r_init = semi_major
+r_init = rp
 if (eccentricity .EQ. 0.0_dp) then
 
 call calculate_EQL_circular(E,Q,L)
