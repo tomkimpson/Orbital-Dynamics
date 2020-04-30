@@ -106,6 +106,10 @@ do while (condition)
     call RKF(y,y1)
     y = y1
  
+
+ !   print *, tau,y(1), time_cutoff,PeriodEst, y(4)
+
+
     !Save the output
     i = i + 1
  

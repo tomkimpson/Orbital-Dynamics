@@ -21,7 +21,7 @@ ax1 = plt.subplot2grid((1,1), (0,0),projection='3d')
 path = '/Users/tomkimpson/Data/ThesisData/MPD/'
 MPDFile= path +'trajectory.txt'
 
-
+a = 0.6
 def plot(f):
     data = np.loadtxt(f)
 
@@ -29,6 +29,18 @@ def plot(f):
     x = data[:,1]
     y = data[:,2]
     z = data[:,3]
+
+    w = x**2+y**2+z**2 - a**2
+    r = np.sqrt((w+np.sqrt(w**2 + 4*a**2*z**2))/(2))
+    rp = min(r)
+    ra = max(r)    
+    sma = (rp+ra)/2
+
+
+    print ('Max r = ', ra)
+    print ('Min r = ', rp)
+    print ('Sma = ', sma)
+        
 
 
     ax1.plot(x,y,z)
@@ -53,12 +65,12 @@ def Format3D(ax):
     ax.scatter(0,0,c='r')
 
     #axes limits
-    sq = 20
+    sq = 1000
     ax.set_xlim(-sq,sq)
     ax.set_ylim(-sq,sq)
     ax.set_zlim(-sq,sq)
 
-    ax.set_axis_off()
+    #ax.set_axis_off()
 
 plot(MPDFile)
 Format3D(ax1)
@@ -67,7 +79,7 @@ plt.rc('font', family='serif')
 fs = 20
 
 savefile = '/Users/tomkimpson/Data/ThesisData/orbitaldynamics3d.png'
-plt.savefig(savefile,dpi=100,bbox='tight')
+#plt.savefig(savefile,dpi=100,bbox='tight')
 plt.show()
 
 

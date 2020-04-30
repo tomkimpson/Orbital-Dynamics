@@ -34,8 +34,9 @@ real(kind=dp), dimension(entries) :: Y_init !the array of initial conditions to 
 call setup()
 
 !Calculate the initial E,L,Q from the Keplerian orbital parameters
-r_init = semi_major
+!r_init = semi_major
 r_init = rp
+!r_init = ra
 if (eccentricity .EQ. 0.0_dp) then
 
 call calculate_EQL_circular(E,Q,L)
@@ -83,6 +84,12 @@ print *, 'start RK'
 call rk(Y_init)
 print *, 'Completed RK'
 
+
+
+print *, 'Program completed OK with outfiles:'
+print *, savefile1
+print *, savefile2
+print *, savefile_targets
 
 end subroutine run
 

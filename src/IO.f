@@ -115,18 +115,18 @@ call calculate_covariant_metric(r(j),theta(j),metric)
 
 
 
-print *, '----------------'
-print *, 'Check points:'
-print *, r(j), theta(j)
-print *, metric(1,1), metric(2,2),metric(3,3),metric(4,4),metric(4,1)
-print *, u0(j), u1(j), u2(j),u3(j)
+!print *, '----------------'
+!print *, 'Check points:'
+!print *, r(j), theta(j)
+!print *, metric(1,1), metric(2,2),metric(3,3),metric(4,4),metric(4,1)
+!print *, u0(j), u1(j), u2(j),u3(j)
 
 
-print *, 'check:', metric(1,1) * u0(j)**2 &
-                 + metric(2,2) * u1(j)**2 &
-                 + metric(3,3) * u2(j)**2 &
-                 + metric(4,4) * u3(j)**2 &
-                 +2.0_dp*metric(4,1)*u0(j)*u3(j)
+!print *, 'check:', metric(1,1) * u0(j)**2 &
+ !                + metric(2,2) * u1(j)**2 &
+  !               + metric(3,3) * u2(j)**2 &
+   !              + metric(4,4) * u3(j)**2 &
+    !             +2.0_dp*metric(4,1)*u0(j)*u3(j)
 
 
 endif

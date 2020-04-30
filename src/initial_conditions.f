@@ -71,10 +71,6 @@ endif
 
 
 
-print *, 'Outfiles:'
-print *, savefile1
-print *, savefile2
-
 
 end subroutine setup
 
@@ -119,12 +115,21 @@ real(kind=dp), dimension(4,4) :: metric
 real(kind=dp) :: f3, h3, ur2,ut,uphi,utheta2
 real(kind=dp), dimension(3) :: P3vector, P3vectorXY
 
-
+real(kind=dp) :: eta1, xi1
 
 !Load the variables
 r = r_init
 theta = theta_init
 phi = phi_init
+
+
+
+
+
+
+print *, r,theta,phi
+print *,'ELQ', E,L,Q
+
 
 !Define some useful stuff
 sigma = r**2.0_dp +a**2 * cos(theta)
@@ -133,35 +138,46 @@ delta = r**2.0_dp +a**2 - 2.0_dp*r
 
 
 !Calculate the initial 4 velocity
-PP = E* (r**2.0_dp + a**2) - a*L
+!PP = E* (r**2.0_dp + a**2) - a*L
 
 
 
 
-ut = ((r**2+a**2)*PP/delta -a*(a*E-L))/sigma
-ur2 = (PP**2.0_dp - delta*(r**2.0_dp + (L - a*E)**2.0_dp) )/sigma**2.0_dp
-utheta2 = (Q - cos(theta)**2.0_dp*(a**2 * (1.0_dp - E**2.0_dp)+L**2.0_dp/sin(theta)**2.0_dp) ) / sigma**2
-uphi = (a*PP/delta -a*E + L/sin(theta)**2)/sigma
+!ut = ((r**2+a**2)*PP/delta -a*(a*E-L))/sigma
+!ur2 = (PP**2.0_dp - delta*(r**2.0_dp + (L - a*E)**2.0_dp) )/sigma**2.0_dp
+!utheta2 = (Q - cos(theta)**2.0_dp*(a**2 * (1.0_dp - E**2.0_dp)+L**2.0_dp/sin(theta)**2.0_dp) ) / sigma**2
+!uphi = (a*PP/delta -a*E + L/sin(theta)**2)/sigma
 
 
-
-
-
-
-call checks(ur2,utheta2)
-
-
-
-
+!call checks(ur2,utheta2)
 !Convert to a momentum
-PVector(1) = m0 * ut
-PVector(2) = -m0*sqrt(ur2)  !made this negative
-PVector(3) = -m0*sqrt(utheta2)
-PVector(4) = m0*uphi
+!PVector(1) = m0 * ut
+!PVector(2) = m0*sqrt(ur2)  !made this negative
+!PVector(3) = -m0*sqrt(utheta2)
+!PVector(4) = m0*uphi
 
 
 
 
+
+PP = E*(r**2+a**2) - a*L
+RR = PP**2-delta*(r**2 +Q+(L-a*E)**2)
+TT = Q - cos(theta)**2 * (a**2*(1.00_dp-E**2)+L**2/sin(theta)**2)
+
+call checks(RR,TT)
+
+!Kerr diff equations - think of as magnitudes
+tdot = (a*(L - a*E*sin(theta)**2) + (r**2 + a**2)*PP/delta)/sigma
+rdot = sqrt(RR)/sigma
+thetadot = sqrt(TT)/sigma
+phidot = ((L/sin(theta)**2 -a*E) + a*PP/delta)/sigma
+
+
+
+PVector(1) = m0*tdot
+PVector(2) = m0*rdot
+PVector(3) = -m0*thetadot
+PVector(4) = m0*phidot
 
 
 
@@ -256,13 +272,14 @@ if (a .LT. 0.0_dp) then
 
 else if (a .GT. 0.0_dp) then
   DD = 1.0_dp
-else if (A .EQ. 0.0_dp) then
+else if (a .EQ. 0.0_dp) then
   DD = 1.0_dp
   print *, 'Spin parameter a = 0 (Schwarzchild). Setting DD = +1 in initial_EQL module'
   endif
 
 
 
+print *, 'Apsis:', rp,ra
 
 call function_f(rp,f1)
 call function_g(rp,g1)
@@ -274,6 +291,7 @@ call function_f(ra,f2)
 call function_g(ra,g2)
 call function_h(ra,h2)
 call function_d(ra,d2)
+
 
 
 kappa = d1*h2 - d2*h1
@@ -296,15 +314,24 @@ E = sqrt(E2/E3)
 
 !And the angular momentum
 L1 = -g1*E/h1
-L2 = g1**2.0_dp * E**2.0_dp + (f1*E**2.0_dp - d1)*h1
-
-L = L1 + DD*sqrt(L2)/h1
+L2 = (g1**2.0_dp * E**2.0_dp)/h1**2 + (f1*E**2.0_dp - d1)/h1
+L = L1 + DD*sqrt(L2) !/h1
 
 
 
 !And finally the Carter constant
+Q = zm * (a**2 * (1.0_dp - E**2.0_dp) + L**2.0_dp/(1.0_dp-zm))
 
-Q = zMinus * (a**2 * (1.0_dp - E**2.0_dp) + L**2.0_dp/(1.0_dp-zMinus))
+
+print *, 'calculated ELQ = ', E,L,Q
+
+
+
+
+!E = 0.999390486044721
+!L = 14.515059110545808
+!Q = 210.68716034079137
+
 
 end subroutine calculate_EQL
 
@@ -313,52 +340,60 @@ end subroutine calculate_EQL
 
 
 
-
-
 subroutine function_f(r,f)
-real(kind=dp) :: r,f ! in , out
+!Arguments
+real(kind=dp), intent(in) :: r
+real(kind=dp), intent(out) :: f
+
+!Othera
 real(kind=dp) :: delta
-real(kind=dp) :: ans1, ans2, rr
-integer(kind=dp) :: pow
-
-
-
 
 
 delta = r**2 - 2.0_dp*r + a**2
-f = r**4 + a**2 * (r*(r+2.0_dp))
+f = r**4 + a**2 * (r*(r+2.0_dp)+zm*delta)
 
 
 end subroutine function_f
 
 
-subroutine function_g(r,g)
-real(kind=dp) :: r,g
-g = 2.0_dp*a*r
+
+subroutine function_g(r,f)
+!Arguments
+real(kind=dp), intent(in) :: r
+real(kind=dp), intent(out) :: f
+
+f = 2.0_dp*a*r
+
 end subroutine function_g
 
 
-subroutine function_h(r,h)
-real(kind=dp) :: r,h
-real(kind=dp) :: f3,h3
+subroutine function_h(r,f)
+!Arguments
+real(kind=dp), intent(in) :: r
+real(kind=dp), intent(out) :: f
+!Other
+real(kind=dp) :: delta
 
-
-h = r*(r-2.0_dp) 
-
+delta = r**2 - 2.0_dp*r + a**2
+f = r*(r-2.0_dp) + ((zm*delta)/(1.0_dp - zm))
 end subroutine function_h
 
 
+subroutine function_d(r,f)
+!Arguments
+real(kind=dp), intent(in) :: r
+real(kind=dp), intent(out) :: f
+!Other
+real(kind=dp) :: delta
+
+delta = r**2 - 2.0_dp*r + a**2
 
 
-subroutine function_d(r,d)
-real(kind=dp) :: r, d
-real(kind=dp) :: delta, f3
-
-delta = r**2.0_dp - 2.0_dp*r + a**2
-
-d = (r**2.0_dp)*delta 
+f = delta*(r**2 + zm*a**2)
 
 end subroutine function_d
+
+
 
 
 

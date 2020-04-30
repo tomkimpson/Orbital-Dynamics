@@ -11,9 +11,9 @@ real(kind=dp), parameter :: PI = 4.D0*ATAN(1.D0)
 
 !Orbital parameters
 
-real(kind=dp), parameter :: semi_major = 200.0_dp 
-real(kind=dp), parameter :: eccentricity = 0.10_dp !Orbital eccentricity
-real(kind=dp), parameter :: iota = 0.0_dp !Inclination w.r.t equatorial plane in degrees
+real(kind=dp), parameter :: semi_major = 820.0_dp 
+real(kind=dp), parameter :: eccentricity = 0.70_dp !Orbital eccentricity
+real(kind=dp), parameter :: iota = 20.0_dp !Inclination w.r.t equatorial plane in degrees
 real(kind=dp), parameter :: N_orbit = 1.0_dp !Number of orbits to integrate. Used if duration = 'long' (below)
 real(kind=dp), parameter :: N_spins = 2.0_dp !Number of spin periods to integrate. Used if duration = 'short' (below)
 
@@ -44,7 +44,7 @@ character(len=20), parameter :: duration = 'long' !long, short. Long integrates 
 
 !IO settings
 character(len=200) :: IO_path = '/Users/tomkimpson/Data/ThesisData/MPD/'
-integer(kind=dp) :: N_targets = 20 !Number of target points to extract to use with Ray Tracing
+integer(kind=dp) :: N_targets = 40 !Number of target points to extract to use with Ray Tracing
 
 !Debugging
 integer(kind=dp), parameter :: print_status = 1 !Turns on/off 1/0 print commands 
