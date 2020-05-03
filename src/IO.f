@@ -50,6 +50,8 @@ real(kind=dp), dimension(12) :: yvector,dyvector
 !Create an array to hold the metric
 real(kind=dp), dimension(4,4) :: metric
 
+integer(kind=dp) :: hack_switch, start_index, periapsis_index, dI, p1,p2
+
 
 
 !Load the data - vectorised
@@ -99,19 +101,109 @@ close(10)
 
 
 !Write target points to file
-div = rows/N_targets
-print *, 'div = ',div
+
+
+!First, do a run through to get the 'start point'
+do j=1,rows
+
+    if (r(j) .GT. semi_major) then
+
+    start_index = j
+    exit
+
+    endif
+
+
+enddo
+
+!periapsis_index = minloc(r(start_index:))
+
+
+
+
+print *, 'minloc', minloc(r(start_index:))
+
+periapsis_index = 14820
+!This is an articifial estimate of the index at periapsis
+!Could read this each time,but we want the times to be the same between runs
+!To be refined later
+
+dI =  rows - periapsis_index
+
+p1 = periapsis_index - dI/5
+p2 = periapsis_index + dI/5
+
+
+
+
 open(unit=20,file=savefile_targets,status='replace',form='formatted')
-do j = 1,rows
 
 
-if (mod(j , div) .eq. 0.0_dp)  then
-write(20,*) array(j,1), x(j), y(j),z(j),&
-            u0(j), u1(j), u2(j),u3(j), &
-            r(j), theta(j), phi(j)
 
 
-call calculate_covariant_metric(r(j),theta(j),metric)
+
+div = (p1-start_index + rows - p2)/(N_targets/4.0_dp)!division if using even sampling
+
+do j = start_index,p1
+
+    if (mod(j,div) .eq. 0.0_dp) then
+
+    write(20,*) array(j,1), x(j), y(j),z(j),&
+                u0(j), u1(j), u2(j),u3(j), &
+                r(j), theta(j), phi(j),tau(j)
+    endif
+
+enddo
+
+
+
+div = (p2-p1)/(3.0_dp*N_targets/4.0_dp)
+do j = p1,p2
+
+    if (mod(j,div) .eq. 0.0_dp) then
+
+    write(20,*) array(j,1), x(j), y(j),z(j),&
+                u0(j), u1(j), u2(j),u3(j), &
+                r(j), theta(j), phi(j),tau(j)
+    endif
+
+enddo
+
+
+
+div = (p1-start_index + rows - p2)/(N_targets/4.0_dp)!division if using even sampling
+do j = p2,rows
+
+    if (mod(j,div) .eq. 0.0_dp) then
+    write(20,*) array(j,1), x(j), y(j),z(j),&
+                u0(j), u1(j), u2(j),u3(j), &
+                r(j), theta(j), phi(j),tau(j)
+    endif
+
+enddo
+
+
+!do j = 1,rows
+
+
+
+!if (r(j) .GT. semi_major) then
+!hack_switch = 1
+!endif
+
+! hack to ignore the start of the orbit
+!if (mod(j , div) .eq. 0.0_dp .and. hack_switch .EQ. 1)  then
+
+
+
+
+
+!write(20,*) array(j,1), x(j), y(j),z(j),&
+ !           u0(j), u1(j), u2(j),u3(j), &
+  !          r(j), theta(j), phi(j),tau(j)
+
+
+!call calculate_covariant_metric(r(j),theta(j),metric)
 
 
 
@@ -129,9 +221,13 @@ call calculate_covariant_metric(r(j),theta(j),metric)
     !             +2.0_dp*metric(4,1)*u0(j)*u3(j)
 
 
-endif
+!endif
 
-enddo
+!enddo
+
+
+
+
 close(20)
 
 

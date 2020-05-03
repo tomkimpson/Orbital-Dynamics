@@ -14,7 +14,7 @@ real(kind=dp), parameter :: PI = 4.D0*ATAN(1.D0)
 real(kind=dp), parameter :: semi_major = 820.0_dp 
 real(kind=dp), parameter :: eccentricity = 0.70_dp !Orbital eccentricity
 real(kind=dp), parameter :: iota = 20.0_dp !Inclination w.r.t equatorial plane in degrees
-real(kind=dp), parameter :: N_orbit = 1.0_dp !Number of orbits to integrate. Used if duration = 'long' (below)
+real(kind=dp), parameter :: N_orbit = 1.50_dp !Number of orbits to integrate. Used if duration = 'long' (below)
 real(kind=dp), parameter :: N_spins = 2.0_dp !Number of spin periods to integrate. Used if duration = 'short' (below)
 
 
@@ -33,18 +33,18 @@ real(kind=dp), parameter :: p0 = 1.0e-3 !spin period
 real(kind=dp), parameter :: ThetaObs = PI/4.0_dp , PhiObs = 0.0_dp
 
 !Some additional settings
-real(kind=dp), parameter :: lambda = 1.0_dp !Turn on/off spin-curvature coupling (1 = on)
+real(kind=dp), parameter :: lambda = 0.0_dp !Turn on/off spin-curvature coupling (1 = on)
 real(kind=dp), parameter :: eta = 3.0_dp*PI/12.0_dp !Oreintation of initial momentum
 
 
 !Integration settings
-integer(kind=dp), parameter :: adaptive = 1 !turn on/off adaptive stepsize
+integer(kind=dp), parameter :: adaptive = 0 !turn on/off adaptive stepsize
 character(len=20), parameter :: duration = 'long' !long, short. Long integrates for Norbits * period. !Short integrates for N_spins * p0
 
 
 !IO settings
 character(len=200) :: IO_path = '/Users/tomkimpson/Data/ThesisData/MPD/'
-integer(kind=dp) :: N_targets = 40 !Number of target points to extract to use with Ray Tracing
+integer(kind=dp) :: N_targets = 400 !Number of target points to extract to use with Ray Tracing
 
 !Debugging
 integer(kind=dp), parameter :: print_status = 1 !Turns on/off 1/0 print commands 

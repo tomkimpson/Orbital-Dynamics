@@ -78,7 +78,7 @@ end subroutine setup
 SUBROUTINE checks(RR,TT)
 real(kind = dp) :: RR, TT
 
-if (RR .LT. 0 .and. abs(RR) < precision_limit) then
+if (RR .LT. 0 .and. abs(RR) < 1e-6) then
 print *, ' RR is negative but small. Correction applied :', RR, 0.00_dp
 RR = 0.00_dp
 else if (RR .LT. 0 .and. abs(RR) > 1d-16) then

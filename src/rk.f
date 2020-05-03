@@ -107,7 +107,7 @@ do while (condition)
     y = y1
  
 
- !   print *, tau,y(1), time_cutoff,PeriodEst, y(4)
+ !   print *, tau,y(1), time_cutoff,PeriodEst
 
 
     !Save the output

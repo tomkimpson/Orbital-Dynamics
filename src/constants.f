@@ -69,8 +69,8 @@ real(kind=dp), parameter :: phi_init = PI/4.0_dp !0.0_dp !initial conditions
 real(kind=dp), parameter :: t_init = 0.0_dp !initial conditions_
 real(kind=dp), parameter :: zMinus = cos(theta_min)**2.0_dp
 real(kind=dp), parameter :: inertia = 0.40_dp*(MPSR*Msolar)*(RPSR*1.0d3)**2.0_dp !SI units
-real(kind=dp) :: s0  =  convert_spin*2.0_dp*PI*inertia/p0 !magnitude of spin spatial vector in natural units
-!real(kind=dp), parameter :: s0 = 0.0_dp !convert_spin*2.0_dp*PI*inertia/p0 !magnitude of spin spatial vector in natural units
+!real(kind=dp) :: s0  =  convert_spin*2.0_dp*PI*inertia/p0 !magnitude of spin spatial vector in natural units
+real(kind=dp), parameter :: s0 = 0.0_dp !convert_spin*2.0_dp*PI*inertia/p0 !magnitude of spin spatial vector in natural units
 
 real(kind=dp), parameter :: time_cutoff = 2.0_dp*PI*semi_major**(3.0_dp/2.0_dp) * N_orbit
 
