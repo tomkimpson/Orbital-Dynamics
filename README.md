@@ -1,5 +1,10 @@
 # Spin Curvature Dynamics of a Pulsar in Kerr Spacetime
 
+
+**Note**: This repository has been superseded by  [RelativisticDynamics.jl](https://github.com/tomkimpson/RelativisticDynamics.jl). We recommend you start there.
+
+---
+
 This code calculates the orbital motion of an astrophysical body, such as a pulsar, on a background Kerr spacetime. Going beyond the point particle approximation, we instead model an extended spinning body via the Mathisson-Papertrou-Dixon equations.
 
 
